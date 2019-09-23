@@ -1,0 +1,9 @@
+pluginManagement {
+	repositories {
+		maven { url "http://maven.aliyun.com/nexus/content/repositories/gradle-plugin/" }
+	}
+}
+
+include 'client'
+include 'server'
+include 'util'
