@@ -4,6 +4,8 @@ pluginManagement {
 	}
 }
 
-include 'client'
+//include 'client'
+include 'russian-post-client'
 include 'server'
+include 'sf-express-client'
 include 'util'

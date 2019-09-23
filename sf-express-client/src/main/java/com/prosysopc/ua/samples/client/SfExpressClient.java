@@ -6,34 +6,40 @@
  */
 package com.prosysopc.ua.samples.client;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.Locale;
-
 import com.prosysopc.ua.ApplicationIdentity;
 import com.prosysopc.ua.SecureIdentityException;
 import com.prosysopc.ua.client.UaClient;
 import com.prosysopc.ua.stack.builtintypes.DataValue;
 import com.prosysopc.ua.stack.builtintypes.LocalizedText;
+import com.prosysopc.ua.stack.builtintypes.UnsignedInteger;
 import com.prosysopc.ua.stack.core.ApplicationDescription;
 import com.prosysopc.ua.stack.core.ApplicationType;
+import com.prosysopc.ua.stack.core.Attributes;
 import com.prosysopc.ua.stack.core.Identifiers;
 import com.prosysopc.ua.stack.transport.security.SecurityMode;
+import com.prosysopc.ua.stack.utils.AttributesUtil;
+
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.Locale;
+import java.util.Timer;
 
 /**
  * A very minimal client application. Connects to the server and reads one variable. Works with a
  * non-secure connection.
  */
-public class SimpleClient {
+public class SfExpressClient {
 
   public static void main(String[] args) throws Exception {
     UaClient client = new UaClient("opc.tcp://localhost:52520/OPCUA/SampleConsoleServer");
     client.setSecurityMode(SecurityMode.NONE);
     initialize(client);
     client.connect();
-    DataValue value = client.readValue(Identifiers.Server_ServerStatus_State);
-    System.out.println(value);
-    client.disconnect();
+
+    // Simulate request every 80 milliseconds
+    ScheduledTask st = new ScheduledTask(client);
+    Timer timer = new Timer();
+    timer.schedule(st, 0, 80);
   }
 
   /**
