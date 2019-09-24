@@ -1,0 +1,38 @@
+@startuml interrelationship_diagram
+!include <cloudinsight/java>
+!include <tupadr3/font-awesome-5/chrome>
+!include <tupadr3/font-awesome-5/vuejs>
+' !include <tupadr3/dev2/redis>
+!include <material/key>
+
+title <b>INTERRELATIONSHIP DIAGRAM</b>
+
+'https://github.com/rabelenda/cicon-plantuml-sprites/blob/master/sprites-list.md
+'https://github.com/tupadr3/plantuml-icon-font-sprites
+'https://github.com/Templarian/MaterialDesign
+
+hide stereotype 
+left to right direction
+skinparam defaultTextAlignment center
+' skinparam linetype ortho
+skinparam rectangle {
+  RoundCorner<<SIDE>> 25
+  BorderStyle<<SIDE>> dotted
+} 
+
+actor OBR
+
+rectangle "SF-EXPRESS" <<SIDE>> {
+  rectangle "<$java>\nOPC UA SERVER" as SERVER
+  rectangle "<$java>\nOPC UA CLIENT" as SF_EXPRESS_CLIENT
+}
+
+rectangle "RUSSIAN POST" <<SIDE>> {
+  rectangle "<$java>\nOPC UA CLIENT" as RUSSIAN_POST_CLIENT
+}
+
+OBR --> SF_EXPRESS_CLIENT
+SF_EXPRESS_CLIENT --> SERVER
+SERVER <-- RUSSIAN_POST_CLIENT
+
+@enduml
