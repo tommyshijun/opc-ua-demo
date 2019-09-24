@@ -1,9 +1,13 @@
 @startuml interrelationship_diagram
 !include <cloudinsight/java>
-!include <tupadr3/font-awesome-5/chrome>
-!include <tupadr3/font-awesome-5/vuejs>
-' !include <tupadr3/dev2/redis>
-!include <material/key>
+!include <tupadr3/font-awesome-5/camera>
+!include <tupadr3/font-awesome-5/folder_open>
+!include <tupadr3/font-awesome-5/print>
+!include <tupadr3/material/print>
+!include <material/barcode_scan>
+!include <material/link>
+!include <material/scale>
+!include <material/exit_to_app>
 
 title <b>INTERRELATIONSHIP DIAGRAM</b>
 
@@ -20,19 +24,35 @@ skinparam rectangle {
   BorderStyle<<SIDE>> dotted
 } 
 
-actor OBR
+
+rectangle "DEVICE" <<SIDE>> {
+  rectangle "<$ma_link>\nCONVEYOR" as CONVEYOR
+  rectangle "<$ma_exit_to_app>\nCHUTE" as CHUTE
+  rectangle "<$ma_scale>\nSCALE" as SCALE
+  rectangle "<$print>\nPRINTER" as PRINTER
+  rectangle "<$ma_barcode_scan>\nOBR" as OBR
+  rectangle "<$camera>\nOCR" as OCR
+}
 
 rectangle "SF-EXPRESS" <<SIDE>> {
   rectangle "<$java>\nOPC UA SERVER" as SERVER
   rectangle "<$java>\nOPC UA CLIENT" as SF_EXPRESS_CLIENT
+  rectangle "<$folder_open>\nFTP" as FTP
 }
 
 rectangle "RUSSIAN POST" <<SIDE>> {
   rectangle "<$java>\nOPC UA CLIENT" as RUSSIAN_POST_CLIENT
 }
 
-OBR --> SF_EXPRESS_CLIENT
+CONVEYOR <-- SF_EXPRESS_CLIENT
+CHUTE <-- SF_EXPRESS_CLIENT
+SCALE <-- SF_EXPRESS_CLIENT
+PRINTER <-- SF_EXPRESS_CLIENT
+OBR <-- SF_EXPRESS_CLIENT
+OCR <-- FTP
+SF_EXPRESS_CLIENT --> FTP
 SF_EXPRESS_CLIENT --> SERVER
 SERVER <-- RUSSIAN_POST_CLIENT
+FTP <-- RUSSIAN_POST_CLIENT
 
 @enduml
