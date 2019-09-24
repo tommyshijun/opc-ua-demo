@@ -1,7 +1,8 @@
 plugins { id 'java' }
 
 dependencies {
-    implementation 'org.eclipse.milo:sdk-server:0.3.3'
+    implementation 'org.eclipse.milo:sdk-client:0.3.3'
+    implementation 'org.eclipse.milo:server-examples:0.3.3'
     implementation 'ch.qos.logback:logback-classic:1.1.7'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 }
