@@ -4,10 +4,5 @@ pluginManagement {
 	}
 }
 
-//include 'client'
-include 'russian-post-client'
-include 'server'
-include 'sf-express-client'
-include 'util'
 include 'eclipse-milo:client'
 include 'eclipse-milo:server'

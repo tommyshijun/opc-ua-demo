@@ -30,18 +30,21 @@ rectangle "DEVICE" <<SIDE>> {
   rectangle "<$ma_exit_to_app>\nCHUTE" as CHUTE
   rectangle "<$ma_scale>\nSCALE" as SCALE
   rectangle "<$print>\nPRINTER" as PRINTER
-  rectangle "<$ma_barcode_scan>\nOBR" as OBR
-  rectangle "<$camera>\nOCR" as OCR
+  rectangle "<$camera>\nOBR" as OBR
 }
 
 rectangle "SF-EXPRESS" <<SIDE>> {
   rectangle "<$java>\nOPC UA SERVER" as SERVER
   rectangle "<$java>\nOPC UA CLIENT" as SF_EXPRESS_CLIENT
-  rectangle "<$folder_open>\nFTP" as FTP
+}
+
+rectangle "TOSHIBA" <<SIDE>> {
+  rectangle "<$ma_barcode_scan>\nOCR" as OCR
 }
 
 rectangle "RUSSIAN POST" <<SIDE>> {
   rectangle "<$java>\nOPC UA CLIENT" as RUSSIAN_POST_CLIENT
+  rectangle "<$folder_open>\nFTP" as FTP
 }
 
 CONVEYOR <-- SF_EXPRESS_CLIENT
@@ -49,10 +52,10 @@ CHUTE <-- SF_EXPRESS_CLIENT
 SCALE <-- SF_EXPRESS_CLIENT
 PRINTER <-- SF_EXPRESS_CLIENT
 OBR <-- SF_EXPRESS_CLIENT
-OCR <-- FTP
-SF_EXPRESS_CLIENT --> FTP
+OBR <--- OCR
+OCR <- SF_EXPRESS_CLIENT
+OBR <-- FTP
 SF_EXPRESS_CLIENT --> SERVER
-SERVER <-- RUSSIAN_POST_CLIENT
-FTP <-- RUSSIAN_POST_CLIENT
+SERVER <- RUSSIAN_POST_CLIENT
 
 @enduml
