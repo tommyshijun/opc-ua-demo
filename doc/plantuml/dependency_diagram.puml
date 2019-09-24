@@ -1,4 +1,4 @@
-@startuml interrelationship_diagram
+@startuml dependency_diagram
 !include <cloudinsight/java>
 !include <tupadr3/font-awesome-5/camera>
 !include <tupadr3/font-awesome-5/folder_open>
@@ -9,7 +9,7 @@
 !include <material/scale>
 !include <material/exit_to_app>
 
-title <b>INTERRELATIONSHIP DIAGRAM</b>
+title <b>DEPENDENCY DIAGRAM</b>
 
 'https://github.com/rabelenda/cicon-plantuml-sprites/blob/master/sprites-list.md
 'https://github.com/tupadr3/plantuml-icon-font-sprites
@@ -28,9 +28,9 @@ skinparam rectangle {
 rectangle "DEVICE" <<SIDE>> {
   rectangle "<$ma_link>\nCONVEYOR" as CONVEYOR
   rectangle "<$ma_exit_to_app>\nCHUTE" as CHUTE
-  rectangle "<$ma_scale>\nSCALE" as SCALE
   rectangle "<$print>\nPRINTER" as PRINTER
   rectangle "<$camera>\nOBR" as OBR
+  rectangle "<$ma_scale>\nDWS" as DWS
 }
 
 rectangle "SF-EXPRESS" <<SIDE>> {
@@ -44,18 +44,26 @@ rectangle "TOSHIBA" <<SIDE>> {
 
 rectangle "RUSSIAN POST" <<SIDE>> {
   rectangle "<$java>\nOPC UA CLIENT" as RUSSIAN_POST_CLIENT
+  rectangle "<$java>\nADDRESS SERVICE" as ADDRESS_SERVICE
+  rectangle "<$java>\nSORTMASTER" as SORTMASTER
+  rectangle "<$java>\nTIAM SERVICE" as TIAM_SERVICE
+  ' rectangle FTP1
   rectangle "<$folder_open>\nFTP" as FTP
 }
 
 CONVEYOR <-- SF_EXPRESS_CLIENT
 CHUTE <-- SF_EXPRESS_CLIENT
-SCALE <-- SF_EXPRESS_CLIENT
+DWS <-- SF_EXPRESS_CLIENT
 PRINTER <-- SF_EXPRESS_CLIENT
 OBR <-- SF_EXPRESS_CLIENT
 OBR <--- OCR
 OCR <- SF_EXPRESS_CLIENT
 OBR <-- FTP
+' DWS <-- FTP
 SF_EXPRESS_CLIENT --> SERVER
-SERVER <- RUSSIAN_POST_CLIENT
+SERVER <-- RUSSIAN_POST_CLIENT
+RUSSIAN_POST_CLIENT --> ADDRESS_SERVICE
+RUSSIAN_POST_CLIENT --> SORTMASTER
+RUSSIAN_POST_CLIENT --> TIAM_SERVICE
 
 @enduml
